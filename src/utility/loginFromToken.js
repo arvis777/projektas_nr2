@@ -4,10 +4,8 @@ export function loginFromToken() {
 
     if (token) {
         user.token = token.token;
-        console.log(token.token)
         return true;
     }
-
     return false;
 }
 

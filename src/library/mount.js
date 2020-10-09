@@ -1,5 +1,6 @@
-export function mount(element) {
-    const bucket = document.getElementById('kibiras');
-    bucket.innerHTML = '';
-    bucket.append(element);
+import {createNode} from './createNode';
+
+export function mount(virtualNode, parent) {
+    const element = createNode(virtualNode);
+    parent.append(element);
 }

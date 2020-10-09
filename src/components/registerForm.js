@@ -1,6 +1,8 @@
-import {generateForm} from '../library/generateForm';
+import {generateForm} from './generateForm';
+import {main} from '../pages/main';
 import {loginForm} from './loginForm';
 import {mount} from '../library/mount';
+import {createNode} from '../library/createNode'
 
 export function registerForm() {
     return generateForm(inputs, buttons, register);
@@ -13,7 +15,7 @@ function register(e) {
 
     inputs.forEach(inputData => {
         credentials[inputData.name] = inputData.value;
-    });
+    })
 
     fetch('http://rest.stecenka.lt/register', {
         headers: {
@@ -24,21 +26,25 @@ function register(e) {
     })
         .then(response => response.json())
         .then(data => {
-            if (data === 'success') {
+            if(data === 'success') {
                 mount(loginForm());
             }
         });
-}
+};
 
 const inputs = [
     {
-        class: 'input input--register',
-        placeholder: 'Arvydas',
-        name: 'name',
-        type: 'text'
+        placeholder: 'Name',
+        name: 'vardas',
+        type: 'vardas'
     },
     {
-        placeholder: 'arvis777@email.com',
+        placeholder: 'Last Name',
+        name: 'pavarde',
+        type: 'pavarde'
+    },
+    {
+        placeholder: 'El@mail.com',
         name: 'email',
         type: 'email'
     },
@@ -47,12 +53,12 @@ const inputs = [
         name: 'password',
         type: 'password'
     }
-];
+]
 
 const buttons = [
     {
-        type: 'submit',
         name: 'register',
-        title: 'Registruotis'
+        type: 'submit',
+        title: 'Register'
     }
-];
+]

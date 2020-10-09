@@ -1,7 +1,7 @@
-import {mount} from '../library/mount';
-import {generateForm} from '../library/generateForm';
+import {generateForm} from './generateForm';
 import {main} from '../pages/main';
-import {user} from '../utility/login';
+import {mount} from '../library/mount';
+import {user} from '../utility/loginFromToken';
 
 export function loginForm() {
     return generateForm(inputs, buttons, fn);
@@ -14,7 +14,7 @@ function fn(e) {
 
     inputs.forEach(inputData => {
         credentials[inputData.name] = inputData.value;
-    });
+    })
 
     fetch('http://rest.stecenka.lt/login', {
         headers: {
@@ -24,37 +24,38 @@ function fn(e) {
         body: JSON.stringify(credentials)
     })
         .then(response => {
-            if (response.ok) {
+            if(response.ok) {
                 return response.json();
             }
         })
         .then(token => {
-            if (token) {
+            if(token) {
                 localStorage.setItem('token', token);
                 user.token = 'Bearer ' + token;
-                main();
+                mount(mainPage());
             }
         });
 }
 
 const inputs = [
     {
-        class: 'input input--white',
         placeholder: 'Email',
         name: 'email',
-        type: 'email'
+        type: 'email',
+        value: ''
     },
     {
         placeholder: 'Password',
         name: 'password',
-        type: 'password'
+        type: 'password',
+        value: ''
     }
-];
+]
 
 const buttons = [
     {
-        type: 'submit',
         name: 'login',
-        title: 'Prisijungti'
+        type: 'submit',
+        title: 'Log in'
     }
-];
+]

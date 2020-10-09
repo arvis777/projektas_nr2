@@ -1,3 +1,3 @@
-export function hyperscript(nodeName, attributes = {}, ...children) {
-    return {nodeName, attributes, children};
+export default function h(nodeNameOrComponent, attributes = {}, ...children) {
+    return {nodeNameOrComponent, attributes, children};
 }
